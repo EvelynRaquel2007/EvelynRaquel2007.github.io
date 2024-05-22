@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <body>
+    <style>
+        body{
+            font: bold 11pt Arial;
+            background-color: rgba(76, 33, 103, 0.884);
+            text-align: left;
+            display: grid;
+        }
+    </style>
+   </body>
+  <form action="POST" name="Clientes_formulario" id="formulario_part2">
+    <fieldset>
+        <legend>Trabalhe conosco</legend>
+<div>
+    <label for="name">
+        Nome Completo:
+        <input
+        type="text"
+        name="nome"
+        id="nome"
+        placeholder="Informe seu nome completo"
+/>
+</label>
+
+<h5>VAGAS DISPONÍVEIS</h5>
+</div>
+
+
+<div>
+    <label for="id_Dev"
+    >Dev-Front-end JR
+<input
+type="radio"
+name="radio"
+valeu="Dev-Front-end JR"
+id="id_Dev"
+/>
+    </label>
+
+
+
+<label for="Designer"
+>Designer UI/UX
+<input
+type="radio"
+name="radio"
+value="Designer UI/UX"
+id="id_designer"
+/>
+</label>
+</div>
+
+<h5>HABILIDADES</h5>
+
+<div>
+    <label for="id_html">HTML
+<input 
+type="checkbox" 
+name="checkbox"
+value="HTML" 
+id="id_html">
+    </label>
+
+
+    <label for="id_javascript">Javascript
+        <input 
+        type="checkbox" 
+        name="checkbox" 
+        value="Javascript" 
+        id="id_javascript">
+    </label>
+
+
+<label for="id_css">CSS
+    <input 
+    type="checkbox" 
+    name="checkbox"
+    value="CSS"
+    id="id_css">
+</label>
+
+</div>
+
+
+
+<div>
+
+   
+    <label for="id_cursos">Cursos:
+        <textarea></textarea>
+    </label>
+    
+
+</div>
+    </fieldset>
+  </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <body>
+
+    <script type="module">
+
+        // Importação
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js&quot;";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js&quot;";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js&quot;";
+        
+        const firebaseConfig = {
+        apiKey: "AIzaSyBD_3WzPZBm83lUW0pMLt48IdLpkovC1a8",
+        authDomain: "teste-484d9.firebaseapp.com",
+        projectId: "teste-484d9",
+        storageBucket: "teste-484d9.appspot.com",
+        messagingSenderId: "631993282858",
+        appId: "1:631993282858:web:708a7715ffc0fda626ee53",
+        measurementId: "G-ZQKVK9DSWK"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase();
+        
+        let form = document.getElementById("form_part2");
+        form.addEventListener("submit",(e)=>{
+        e.preventDefault();
+        
+        let vetor = [];
+        
+        //1ª RESOLUÇÃO - Percorrer com o FOR
+        for(let i = 0; i < form.habilidades.length; i++){
+        if(form.habilidades[i].checked){
+        vetor[i] = form.habilidades[i].value;
+        console.log(form.habilidades[i].value)
+        }
+        }
+        
+        
+        //2ª RESOLUÇÃO - Percorrer com o forEach
+        // form.habilidades.forEach((valor, index)=>{
+        // if(valor.checked){
+        // vetor[index] = valor.value;
+        // console.log(valor.value);
+        // }
+        // });
+        
+        
+        //3ª RESOLUÇÃO - Captura via querySelectorAll
+        // let temp = document.querySelectorAll(`[name=habilidades]:checked`);
+        // temp.forEach((valor, index)=>{
+        // vetor[index] = valor.value;
+        // console.log(index, valor.value);
+        // })
+        
+        
+        alert(`
+        Nome: ${form.nome_completo.value}
+        Vaga: ${form.cargo.value}
+        Habilidades: ${vetor}
+        Cursos: ${form.cursos_textarea.value}
+        `);
+        
+        // Enviar os dados para o Firebase
+        const usersRef = ref(database, 'users');
+        push(usersRef, {
+        nome: form.nome_completo.value,
+        radio: form.cargo.value,
+        cursos: form.cursos_textarea.value,
+        checks: vetor
+        
+        }).then(() => {
+        alert('Dados enviados com sucesso!');
+        console.log("Dados enviados com sucesso!");
+        // Faça qualquer ação adicional aqui, como redirecionar o usuário ou exibir uma mensagem de sucesso.
+        }).catch((error) => {
+        console.error('Erro ao enviar dados:', error);
+        });
+        
+        })
+        
+        </script>
+
+
+
+   </body>
+    
+
+   </head>
+</html>
